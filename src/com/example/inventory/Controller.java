@@ -33,21 +33,33 @@ public class Controller extends HttpServlet {
 		String price = request.getParameter("price");
 		String action = request.getParameter("action");
 		String id = request.getParameter("id");
-		System.out.println("Done till here");
-		
-		if(action.equals("create")){
+		if(action == null){
+			request.setAttribute("database", database.selectAll());
+			getServletContext().getRequestDispatcher("/inventory.jsp").forward(request, response);
+		}
+		else if(action.equals("create")){
 		Inventory inventory = new Inventory(name,Integer.parseInt(qty),Double.parseDouble(price));
 		database.create(inventory);
+		request.setAttribute("database", database.selectAll());
+		getServletContext().getRequestDispatcher("/inventory.jsp").forward(request, response);
 		}
 		else if(action.equals("remove")){
 			database.remove(Integer.parseInt(id));
+			request.setAttribute("database", database.selectAll());
+			getServletContext().getRequestDispatcher("/inventory.jsp").forward(request, response);
 		}
 		else if(action.equals("update")){
 			
 		}
-		
+		else if(action.equals("logout")){
+			request.getSession().setAttribute("error", null);
+			response.sendRedirect("index.jsp");
+		}
+		else{
 		request.setAttribute("database", database.selectAll());
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/inventory.jsp").forward(request, response);}
+		
+		
 	}
 
 	/**
