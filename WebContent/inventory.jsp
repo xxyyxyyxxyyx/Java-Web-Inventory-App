@@ -15,22 +15,25 @@
 %>
 <%
 		ArrayList<Inventory> inventories = (ArrayList<Inventory>) request.getAttribute("database");
+		Inventory item = (Inventory)session.getAttribute("inventory");
+		if(item == null)item = new Inventory("",0,0.0);
 	%>
 	<form action="controller">
 		<table class="table">
 			<tr>
 				<td>
-					<h3>Product Name</h3> <input name="name" class="form-control" />
+					<h3>Product Name</h3> <input name="name" class="form-control" value="<%=item.getName()%>" />
 				</td>
 				<td>
-					<h3>Qty</h3> <input name="qty" class="form-control" />
+					<h3>Qty</h3> <input name="qty" class="form-control" value="<%= item.getQty()%>" />
 				</td>
 				<td>
-					<h3>Price</h3> <input name="price" class="form-control" />
+					<h3>Price</h3> <input name="price" class="form-control" value="<%= item.getPrice()%>" />
 				</td>
 				<td>
 					<h3><br> </h3>
-					<button class="btn btn-success" name="action" value="create">Add</button>
+					<button class="btn btn-success " name="action" value="create">Add</button>
+					<button class="btn btn-primary " name="action" value="update">Update</button>
 				</td>
 			</tr>
 		</table>
@@ -74,9 +77,9 @@
 				<td><%=inventory.getPrice()%></td>
 				<td><%=inventory.getTotal()%></td>
 				<td><a href="controller?action=remove&id=<%=inventory.getId()%>"
-					class="btn btn-danger"> Delete</a> <button
-					name="id" value=<%=inventory.getId()%>
-					class="btn btn-warning"> Update</button></td>
+					class="btn btn-danger"> Delete</a> <a
+					href="controller?action=select&id=<%=inventory.getId()%>"
+					class="btn btn-warning"> Select</a></td>
 			</tr>
 			<%
 				}
@@ -86,7 +89,7 @@
 
 	</form>
 
-
-<a href="controller?action=logout" class="btn btn-danger">Log Out</a>
+<br><br><br>
+<a href="controller?action=logout" class="btn btn-info" style="float:right;">Log Out</a>
 </body>
 </html>

@@ -69,7 +69,24 @@ public class Database {
 		}
 		return inventories;
 	}
-	
+	public void update(int id,String name,int qty,double price){
+		Connection conn = getConnection();
+		String sql = "update inventory set name = ?, qty = ?, price = ? where id = ?";
+		try{
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, name);
+			stmt.setInt(2, qty);
+			stmt.setDouble(3, price);
+			stmt.setInt(4, id);
+			stmt.execute();
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		finally{
+			closeConnection(conn);
+		}
+	}
 	public void remove(int id){
 		Connection conn = getConnection();
 		String sql = "Delete from inventory where id = ?";
@@ -83,6 +100,7 @@ public class Database {
 		finally{
 			closeConnection(conn);
 		}
+		
 	}
 	public Inventory selectOne(int id){
 		Inventory inventory = null;

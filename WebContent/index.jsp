@@ -14,16 +14,16 @@
 	<form action="login">
 		<table align="center">
 			<tr>
-				<th align="right">Username:</th>
-				<td><input type="text" name="username" /></td>
+				<th align="right">Username: </th>
+				<td><input type="text" name="username" class="form-control"/></td>
 
 			</tr>
 			<tr>
 				<td><br></td>
 			</tr>
 			<tr>
-				<th align="right">Password:</th>
-				<td><input type="password" name="password" /></td>
+				<th align="right">Password: </th>
+				<td><input type="password" name="password" class="form-control"/></td>
 			</tr>
 
 			<tr>
@@ -36,8 +36,11 @@
 			</tr>
 		</table>
 	</form>
+	<br>
 	<% String error = (String) session.getAttribute("error");
 	if(error !=null){%>
-	<h3 align="center"><%=error %></h3><%} %>
+	<div class="alert alert-danger centered" style="display:table;width: 50%;
+  margin: 0 auto;" >
+	<h4 align="center" ><%=error %></h4> </div><%} %>
 </body>
 </html>
